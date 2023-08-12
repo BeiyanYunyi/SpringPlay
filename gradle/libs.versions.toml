@@ -2,21 +2,17 @@
 
 [plugins]
 
-org-springframework-boot = { id = "org.springframework.boot", version = "2.7.9" }
+org-springframework-boot = { id = "org.springframework.boot", version = "3.1.2" }
 
-io-spring-dependency-management = { id = "io.spring.dependency-management", version = "1.1.0" }
+io-spring-dependency-management = { id = "io.spring.dependency-management", version = "1.1.3" }
 
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.8.21" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.9.0" }
 
-org-jetbrains-kotlin-plugin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version = "1.8.21" }
+org-jetbrains-kotlin-plugin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version = "1.9.0" }
 
 [versions]
 
-kotlin = "1.8.21"
-##  ⬆ = "1.8.22"
-##  ⬆ = "1.9.0-Beta"
-##  ⬆ = "1.9.0-RC"
-##  ⬆ = "1.9.0"
+kotlin = "1.9.0"
 
 [libraries]
 
@@ -27,3 +23,5 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 kotlin-scripting-compiler-embeddable = { group = "org.jetbrains.kotlin", name = "kotlin-scripting-compiler-embeddable", version.ref = "kotlin" }
 
 kotlin-allopen = { group = "org.jetbrains.kotlin", name = "kotlin-allopen", version.ref = "kotlin" }
+
+kotlin-allopen-compiler-plugin-embeddable = { group = "org.jetbrains.kotlin", name = "kotlin-allopen-compiler-plugin-embeddable", version.ref = "kotlin" }

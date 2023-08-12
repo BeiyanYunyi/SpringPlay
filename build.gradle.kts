@@ -25,6 +25,7 @@ dependencies {
   implementation(Kotlin.stdlib.jdk8)
   implementation(KotlinX.coroutines.core)
   implementation(KotlinX.coroutines.reactor)
+  implementation(Spring.boot.actuator)
   testImplementation(Spring.boot.test)
 }
 
