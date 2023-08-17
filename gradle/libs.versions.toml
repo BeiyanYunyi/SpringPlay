@@ -10,6 +10,8 @@ org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.9.0" 
 
 org-jetbrains-kotlin-plugin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version = "1.9.0" }
 
+org-graalvm-buildtools-native = { id = "org.graalvm.buildtools.native", version = "0.9.24" }
+
 [versions]
 
 kotlin = "1.9.0"
@@ -25,3 +27,7 @@ kotlin-scripting-compiler-embeddable = { group = "org.jetbrains.kotlin", name = 
 kotlin-allopen = { group = "org.jetbrains.kotlin", name = "kotlin-allopen", version.ref = "kotlin" }
 
 kotlin-allopen-compiler-plugin-embeddable = { group = "org.jetbrains.kotlin", name = "kotlin-allopen-compiler-plugin-embeddable", version.ref = "kotlin" }
+
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+
+junit-platform-native = "org.graalvm.buildtools:junit-platform-native:_"
