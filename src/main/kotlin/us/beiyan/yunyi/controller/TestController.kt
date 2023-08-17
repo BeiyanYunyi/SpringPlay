@@ -10,7 +10,5 @@ import java.util.*
 @RequestMapping("/")
 class TestController {
   @GetMapping("/", produces = [MediaType.APPLICATION_JSON_VALUE])
-  fun get(): Any {
-    return "\"Hello World\""
-  }
+  fun get(): Any = "\"Hello World\""
 }
