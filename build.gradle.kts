@@ -3,10 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   id("org.springframework.boot")
   id("io.spring.dependency-management")
+  id("org.graalvm.buildtools.native")
   kotlin("jvm")
   kotlin("plugin.spring")
-  //java
-  application
 }
 
 group = "us.beiyan.yunyi"
@@ -40,3 +39,23 @@ tasks.withType<KotlinCompile> {
 springBoot {
   mainClass.value("us.beiyan.yunyi.ApplicationKt")
 }
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_17
+}
+
+
+
+graalvmNative {
+  binaries {
+    all {
+      javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.matching("Oracle GraalVM")
+      }
+    }
+  }
+}
+
+
+
