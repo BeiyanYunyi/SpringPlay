@@ -1,0 +1,28 @@
+server.port: "3000"
+management.endpoints.web:
+  exposure:
+    include: "*"
+  cors:
+    allowed-origins: "*"
+logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+spring:
+  jpa:
+    defer-datasource-initialization: true
+    generate-ddl: true
+  datasource:
+    url: jdbc:h2:file:./data/h2;DB_CLOSE_DELAY=-1
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+hibernate:
+  show_sql: true
+  format_sql: true
+  highlight_sql: true
+  hbm2ddl.auto: create-drop

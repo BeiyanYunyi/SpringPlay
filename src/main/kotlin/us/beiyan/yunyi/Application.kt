@@ -26,11 +26,11 @@ class AppConfig {
   }
 }
 
-@SpringBootApplication
-class Application
+@SpringBootApplication class Application
 
 fun main(args: Array<String>) {
   runApplication<Application>(*args)
   // Try adding program arguments via Run/Debug configuration.
-  // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
+  // Learn more about running applications:
+  // https://www.jetbrains.com/help/idea/running-applications.html.
 }

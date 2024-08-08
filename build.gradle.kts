@@ -1,16 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  id("org.springframework.boot")
-  id("io.spring.dependency-management")
-  id("org.graalvm.buildtools.native")
-  kotlin("jvm")
-  kotlin("plugin.spring")
+  alias(libs.plugins.org.springframework.boot)
+  alias(libs.plugins.io.spring.dependency.management)
+  alias(libs.plugins.org.graalvm.buildtools.native)
+  alias(libs.plugins.org.jetbrains.kotlin.jvm)
+  alias(libs.plugins.org.jetbrains.kotlin.plugin.spring)
 }
 
 group = "us.beiyan.yunyi"
 version = "1.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
   mavenCentral()
@@ -19,13 +18,16 @@ repositories {
 
 dependencies {
   implementation(libs.spring.boot.starter)
-  implementation(Spring.boot.web)
+  implementation(libs.spring.boot.starter.web)
   implementation(libs.kotlin.reflect)
-  implementation(Kotlin.stdlib.jdk8)
-  implementation(KotlinX.coroutines.core)
-  implementation(KotlinX.coroutines.reactor)
-  implementation(Spring.boot.actuator)
-  testImplementation(Spring.boot.test)
+  implementation(libs.kotlin.stdlib.jdk8)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.coroutines.reactor)
+  implementation(libs.spring.boot.starter.actuator)
+  implementation(libs.hibernate.core)
+  implementation(libs.spring.boot.starter.data.jpa)
+  implementation(libs.h2)
+  testImplementation(libs.spring.boot.starter.test)
 }
 
 tasks.test {
@@ -33,7 +35,9 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "17"
+  kotlin.compilerOptions {
+    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+  }
 }
 
 springBoot {
@@ -41,17 +45,16 @@ springBoot {
 }
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_17
+  sourceCompatibility = JavaVersion.VERSION_21
 }
-
 
 
 graalvmNative {
   binaries {
     all {
       javaLauncher = javaToolchains.launcherFor {
-        languageVersion = JavaLanguageVersion.of(17)
-        vendor = JvmVendorSpec.matching("Oracle GraalVM")
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.matching("GraalVM")
       }
     }
   }
