@@ -28,6 +28,7 @@ dependencies {
   implementation(libs.spring.boot.starter.data.jpa)
   implementation(libs.h2)
   testImplementation(libs.spring.boot.starter.test)
+  testImplementation(libs.junit)
 }
 
 tasks.test {
