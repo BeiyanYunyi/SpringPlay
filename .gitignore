@@ -43,3 +43,6 @@ bin/
 
 data
 .kotlin
+
+### Nix Output ###
+result
