@@ -1,6 +1,7 @@
 {
   inputs = {
     utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1.0.tar.gz";
   };
   outputs =
     { nixpkgs, utils, ... }:
@@ -28,30 +29,34 @@
       in
       # deno = pkgs.callPackage ./deno.nix { };
       rec {
-        fetchd = pkgs.gradle;
-        mitmC = pkgs.mitm-cache;
         packages.default =
           let
             self = pkgs.stdenv.mkDerivation (finalAttrs: {
               pname = "spring-play";
               version = "1.0.0";
               src = ./.;
-              nativeBuildInputs = with pkgs; [ gradle ];
-              buildInputs = with pkgs; [ makeWrapper ];
+              # nativeBuildInputs = with pkgs; [ gradle ];
+
+              nativeBuildInputs = with pkgs; [
+                # makeWrapper
+                gradle
+              ];
               mitmCache = pkgs.gradle.fetchDeps {
                 inherit (finalAttrs) pname;
                 pkg = self;
                 data = ./deps.json;
               };
               __darwinAllowLocalNetworking = true;
-              gradleUpdateTask = "bootJar";
-              gradleBuildTask = "bootJar";
+              gradleUpdateTask = "nativeCompile";
+              gradleBuildTask = "nativeCompile";
+              # mkdir -p $out/{bin,share/SpringPlay}
+              # cp build/libs/SpringPlay-1.0-SNAPSHOT.jar $out/share/SpringPlay
+              # makeWrapper ${graalVM}/bin/java $out/bin/SpringPlay \
+              #   --add-flags "-jar $out/share/SpringPlay/SpringPlay-1.0-SNAPSHOT.jar"
               installPhase = ''
                 runHook preInstall
-                mkdir -p $out/{bin,share/SpringPlay}
-                cp build/libs/SpringPlay-1.0-SNAPSHOT.jar $out/share/SpringPlay
-                makeWrapper ${graalVM}/bin/java $out/bin/SpringPlay \
-                  --add-flags "-jar $out/share/SpringPlay/SpringPlay-1.0-SNAPSHOT.jar"
+                mkdir -p $out/bin
+                cp build/native/nativeCompile/SpringPlay $out/bin
                 runHook postInstall
               '';
             });
@@ -68,6 +73,20 @@
             cp ${packages.default.mitmCache.updateScript} $out/bin/update-deps
             runHook postInstall
           '';
+        };
+        packages.dockerImage = pkgs.dockerTools.buildLayeredImage {
+          name = "spring-play";
+          tag = "latest";
+          contents = [ packages.default ];
+          # copyToRoot = pkgs.buildEnv {
+          #   name = "spring-play";
+          #   paths = [ packages.default ];
+          #   pathsToLink = [ "/bin" ];
+          # };
+          # copyToRoot = [ packages.default ];
+          config = {
+            Cmd = [ "/bin/SpringPlay" ];
+          };
         };
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
